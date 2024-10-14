@@ -1,0 +1,55 @@
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+td{
+    padding: 10px;
+    text-align: center;
+}
+.header{
+  background-color: rgbd(rgb(157, 44, 44), green, blue);
+  padding: 10px;
+}
+.menu{
+    text-align: left;
+}
+.error{
+    padding: 50px;
+    font-size: 24px;
+    color: blue;
+}
+   .illustration{
+    padding: 50px;
+   }
+   .contact-info{
+    padding: 10px;
+    background-color: #778;
+   }
+   .search-bar{
+    padding: 20px;
+   }
+   .promo-message{
+    background-color:rgb(213, 84, 84);
+    padding: 30px;
+    font-size: 28px;
+    font-weight: bold;
+   }
+   .form-input{
+    padding: 20px;
+   }
+   input[type="text"], input[type="tel"]{
+    padding: 20px;
+    margin: 22px;
+    width: 200px;
+    font-size: 16px;
+   }
+   input[type="submit"]{
+    padding: 10px 20px;
+    background-color: rgb(14, 80, 141);
+    color: rgb(233, 131, 29);
+    border: none;
+    font-size: 16px;
+   }
+   body{
+    background-color:rgb(214, 189, 116);
+   }
