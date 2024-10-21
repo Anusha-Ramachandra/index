@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="HTMLCSS_Task3_calculator.css">
+</head>
+<body>
+
+<div class="calculator">
+    <input type="text" id="display" readonly>
+    <div class="row">
+        <div class="col-3"><button class="btn btn-danger" onclick="clearDisplay()">C</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('7')">7</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('8')">8</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('9')">9</button></div>
+    </div>
+    <div class="row">
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('4')">4</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('5')">5</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('6')">6</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('*')">*</button></div>
+    </div>
+    <div class="row">
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('1')">1</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('2')">2</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('3')">3</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('-')">-</button></div>
+    </div>
+    <div class="row">
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('0')">0</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="calculateResult()">=</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('+')">+</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="saveToMemory()">M+</button></div>
+    </div>
+    <div class="row">
+        <div class="col-3"><button class="btn btn-danger" onclick="clearMemory()">MC</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="recallMemory()">M-</button></div>
+        <div class="col-3"><button class="btn btn-primary" onclick="appendToDisplay('%')">%</button></div>
+    </div>
+</div>
+
+<script>
+    let memory = 0;
+
+    document.addEventListener('keydown', function(event) {
+        if (!isNumber(event.key) && !isOperator(event.key)) {
+            alert("Only numbers are allowed");
+            event.preventDefault();
+        } else if (isNumber(event.key)) {
+            appendToDisplay(event.key);
+        }
+    });
+
+    function isNumber(key) {
+        return /^[0-9]$/.test(key);
+    }
+
+    function isOperator(key) {
+        return ['+', '-', '*', '/', '%'].includes(key);
+    }
+
+    function appendToDisplay(value) {
+        const display = document.getElementById('display');
+        display.value += value;
+    }
+
+    function clearDisplay() {
+        document.getElementById('display').value = '';
+    }
+
+    function calculateResult() {
+        const display = document.getElementById('display');
+        try {
+            display.value = eval(display.value);
+        } catch (e) {
+            alert("Invalid expression");
+            clearDisplay();
+        }
+    }
+
+    function saveToMemory() {
+        const display = document.getElementById('display');
+        memory += parseFloat(display.value) || 0;
+        localStorage.setItem('calculatorMemory', memory);
+    }
+
+    function clearMemory() {
+        memory = 0;
+        localStorage.removeItem('calculatorMemory');
+    }
+
+    function recallMemory() {
+        const display = document.getElementById('display');
+        memory = parseFloat(localStorage.getItem('calculatorMemory')) || 0;
+        display.value += memory;
+    }
+</script>
+
+<!-- Test Suite -->
+<script>
+    // A simple test suite for the calculator
+    function testCalculator() {
+        console.assert(eval('2 + 2') === 4, 'Test Failed: 2 + 2 should equal 4');
+        console.assert(eval('5 - 3') === 2, 'Test Failed: 5 - 3 should equal 2');
+        console.assert(eval('6 * 7') === 42, 'Test Failed: 6 * 7 should equal 42');
+        console.assert(eval('8 / 4') === 2, 'Test Failed: 8 / 4 should equal 2');
+        console.assert(eval('10 % 3') === 1, 'Test Failed: 10 % 3 should equal 1');
+        console.log('All tests passed!');
+    }
+    testCalculator();
+</script>
+
+</body>
+</html>
